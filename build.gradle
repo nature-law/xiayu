@@ -1,18 +1,37 @@
 plugins {
-
+	id 'org.springframework.boot' version "${springbootVersion}"
+	id 'io.spring.dependency-management' version "${springDependency}"
 }
-
 group = 'com.naturelaw'
 version = '0.0.1-SNAPSHOT'
 
 repositories {
+	maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+	mavenLocal()
 	mavenCentral()
+	gradlePluginPortal()
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	sourceCompatibility = '1.8'
+
+	repositories {
+		mavenLocal()
+		maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+		mavenCentral()
+		gradlePluginPortal()
+	}
 }
+
+subprojects {
+	dependencies {
+		implementation "org.springframework.boot:spring-boot-starter-web:${springbootVersion}"
+		implementation "org.springframework.boot:spring-boot-starter-aop:${springbootVersion}"
+	}
+}
+
 
 test {
 	useJUnitPlatform()
