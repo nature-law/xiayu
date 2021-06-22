@@ -1,22 +1,4 @@
-plugins {
-	id 'org.springframework.boot' version "${springbootVersion}"
-	id 'io.spring.dependency-management' version "${springDependency}"
-}
-group = 'com.naturelaw'
-version = '0.0.1-SNAPSHOT'
-
-repositories {
-	maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
-	mavenLocal()
-	mavenCentral()
-	gradlePluginPortal()
-}
-
-allprojects {
-	apply plugin: 'java'
-	apply plugin: 'idea'
-	sourceCompatibility = '1.8'
-
+buildscript {
 	repositories {
 		mavenLocal()
 		maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
@@ -24,11 +6,43 @@ allprojects {
 		gradlePluginPortal()
 	}
 }
+plugins {
+	id "org.springframework.boot" version "${springboot}"
+}
+apply from: './version.gradle'
+
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	group = "$projectGroup"
+	version = "$projectVersion"
+	sourceCompatibility = '1.8'
+	targetCompatibility = '1.8'
+
+	repositories {
+		mavenLocal()
+		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+		mavenCentral()
+		gradlePluginPortal()
+	}
+
+	tasks.withType(JavaCompile) {
+		//enable compilation in a separate daemon process
+		options.fork = true
+		options.encoding = 'UTF-8'
+	}
+}
 
 subprojects {
 	dependencies {
-		implementation "org.springframework.boot:spring-boot-starter-web:${springbootVersion}"
-		implementation "org.springframework.boot:spring-boot-starter-aop:${springbootVersion}"
+		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$rootProject.ext.version.springboot"
+		implementation "org.springframework.boot:spring-boot-starter-aop:$rootProject.ext.version.springboot"
+		testImplementation "org.springframework.boot:spring-boot-starter-test:$rootProject.ext.version.springboot"
+		implementation "org.springframework.boot:spring-boot-devtools:$rootProject.ext.version.springboot"
+	}
+
+	test {
+		useJUnitPlatform()
 	}
 }
 
