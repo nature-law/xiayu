@@ -1,3 +1,3 @@
 rootProject.name = 'xiayu'
-include 'design-pattern', 'teamwork-client'
+include 'design-pattern'
 

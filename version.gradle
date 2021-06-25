@@ -1,5 +1,5 @@
 ext {
 	version = [
-			springboot: '2.4.5'
+			springboot: "${springboot}"
 	]
 }

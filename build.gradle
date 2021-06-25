@@ -1,3 +1,5 @@
+apply from: './version.gradle'
+
 buildscript {
 	repositories {
 		mavenLocal()
@@ -5,15 +7,16 @@ buildscript {
 		mavenCentral()
 		gradlePluginPortal()
 	}
+	dependencies {
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springboot}"
+	}
 }
-plugins {
-	id "org.springframework.boot" version "${springboot}"
-}
-apply from: './version.gradle'
+
 
 allprojects {
 	apply plugin: 'java'
 	apply plugin: 'idea'
+	apply plugin: "org.springframework.boot"
 	group = "$projectGroup"
 	version = "$projectVersion"
 	sourceCompatibility = '1.8'
@@ -44,9 +47,4 @@ subprojects {
 	test {
 		useJUnitPlatform()
 	}
-}
-
-
-test {
-	useJUnitPlatform()
 }
