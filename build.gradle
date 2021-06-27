@@ -42,6 +42,12 @@ subprojects {
 		implementation "org.springframework.boot:spring-boot-starter-aop:$rootProject.ext.version.springboot"
 		testImplementation "org.springframework.boot:spring-boot-starter-test:$rootProject.ext.version.springboot"
 		implementation "org.springframework.boot:spring-boot-devtools:$rootProject.ext.version.springboot"
+		implementation "com.google.guava:guava:$rootProject.ext.version.guava"
+		implementation "org.apache.curator:curator-recipes:$rootProject.ext.version.curator"
+		implementation "org.apache.curator:curator-framework:$rootProject.ext.version.curator"
+		implementation "org.apache.curator:curator-client:$rootProject.ext.version.curator"
+
+
 	}
 
 	test {
