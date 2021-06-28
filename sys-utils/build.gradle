@@ -1,5 +1,5 @@
 dependencies {
-	implementation fileTree(dir:'libs',include:['leaf.jar'])
+	implementation fileTree(dir:'libs',include:['*.jar'], excludes: ['spring-boot-starter-jdbc.jar'])
 	implementation 'org.springframework.boot:spring-boot-starter'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

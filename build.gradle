@@ -46,8 +46,7 @@ subprojects {
 		implementation "org.apache.curator:curator-recipes:$rootProject.ext.version.curator"
 		implementation "org.apache.curator:curator-framework:$rootProject.ext.version.curator"
 		implementation "org.apache.curator:curator-client:$rootProject.ext.version.curator"
-
-
+		implementation "mysql:mysql-connector-java:$rootProject.ext.version.mysql"
 	}
 
 	test {
