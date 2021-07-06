@@ -1,10 +1,10 @@
-package com.naturelaw.sysutils;
+package com.naturelaw.core;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SysUtilsApplicationTests {
+class CoreApplicationTests {
 
 	@Test
 	void contextLoads() {

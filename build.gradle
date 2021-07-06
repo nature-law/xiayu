@@ -47,6 +47,11 @@ subprojects {
 		implementation "org.apache.curator:curator-framework:$rootProject.ext.version.curator"
 		implementation "org.apache.curator:curator-client:$rootProject.ext.version.curator"
 		implementation "mysql:mysql-connector-java:$rootProject.ext.version.mysql"
+		implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.version.retrofit"
+		implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.version.retrofit"
+		implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.ext.version.retrofit"
+		implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: "$rootProject.ext.version.okhttp"
+
 	}
 
 	test {

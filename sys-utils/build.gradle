@@ -1,10 +1,7 @@
 dependencies {
-	implementation fileTree(dir:'libs',include:['*.jar'], excludes: ['spring-boot-starter-jdbc.jar'])
-	implementation 'org.springframework.boot:spring-boot-starter'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'com.google.guava:guava'
-	implementation 'org.apache.curator:curator-recipes'
-	implementation 'org.apache.curator:curator-framework'
-	implementation 'org.apache.curator:curator-client'
+	implementation 'com.squareup.retrofit2:retrofit'
+	implementation 'com.squareup.retrofit2:converter-gson'
+	implementation 'com.squareup.retrofit2:adapter-rxjava'
+	implementation group: 'com.squareup.okhttp3', name: 'okhttp'
 }
