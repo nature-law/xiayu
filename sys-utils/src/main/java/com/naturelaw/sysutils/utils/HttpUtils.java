@@ -1,7 +1,8 @@
 package com.naturelaw.sysutils.utils;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import com.naturelaw.sysutils.http.Result;
+
+import java.util.Map;
 
 /**
  * description: 网络访问
@@ -12,17 +13,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class HttpUtils {
 
-	public static final String BASE_URL = "http://ip.taobao.com/";
-
-	private HttpUtils() {
+	public static Result get(String url) {
+		return null;
 	}
 
+	public static Result get(String url, Map<String, String> params) {
+		return null;
+	}
 
+	public static Result post(String url) {
+		return null;
+	}
 
-	Retrofit retrofit = new Retrofit.Builder()
-			.baseUrl("https://api.github.com/")
-			.addConverterFactory(GsonConverterFactory.create())
-			.build();
+	public static Result post(String url, Map<String, String> params) {
+		return null;
+	}
 
-	GitHubService service = retrofit.create(GitHubService.class);
 }

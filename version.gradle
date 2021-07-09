@@ -5,6 +5,8 @@ ext {
 			curator   : '5.1.0',
 			mysql     : '8.0.25',
 			retrofit  : '2.9.0',
-			okhttp    : '3.14.9'
+			okhttp    : '3.14.9',
+			rxjava    : '2.2.21',
+			caffeine  : '3.0.3'
 	]
 }

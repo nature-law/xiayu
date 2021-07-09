@@ -51,6 +51,9 @@ subprojects {
 		implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.version.retrofit"
 		implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.ext.version.retrofit"
 		implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: "$rootProject.ext.version.okhttp"
+		implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: "$rootProject.ext.version.rxjava"
+		implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: "$rootProject.ext.version.caffeine"
+
 
 	}
 
