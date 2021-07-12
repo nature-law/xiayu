@@ -12,13 +12,4 @@ import java.util.concurrent.TimeUnit;
  */
 public class LocalCacheUtils<T> {
 
-
-	public void set(String key, T value) {
-		com.github.benmanes.caffeine.cache.Cache cache = LocalCacheClient.getInstance().getCache();
-		cache.put(key, value);
-	}
-
-	public T get(String key) {
-
-	}
 }

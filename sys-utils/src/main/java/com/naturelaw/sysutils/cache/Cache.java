@@ -25,10 +25,10 @@ public interface Cache<T> {
 	void set(String key, T value, int expireTime);
 
 	/**
-	 * @param key
-	 * @param value
-	 * @param expireTime
-	 * @param timeUnit
+	 * @param key        键
+	 * @param value      值
+	 * @param expireTime 过期时间
+	 * @param timeUnit   过期时间单位
 	 */
 	void set(String key, T value, int expireTime, TimeUnit timeUnit);
 

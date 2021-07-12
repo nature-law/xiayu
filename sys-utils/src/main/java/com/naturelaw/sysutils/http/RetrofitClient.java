@@ -1,5 +1,7 @@
 package com.naturelaw.sysutils.http;
 
+import com.github.benmanes.caffeine.cache.LoadingCache;
+import com.naturelaw.sysutils.cache.LocalCacheClient;
 import com.sun.istack.internal.NotNull;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -18,8 +20,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class RetrofitClient {
 	private volatile static RetrofitClient client = null;
 
-	private static Map<String, Retrofit> retrofitMap = new ConcurrentHashMap<>();
-
 	private RetrofitClient() {
 	}
 
@@ -35,13 +35,14 @@ public class RetrofitClient {
 	}
 
 	public static Retrofit getRetrofit(@NotNull String baseUrl) {
-		Retrofit retrofit = retrofitMap.get(baseUrl);
+		LoadingCache<String, Object> weightLoadingCache = LocalCacheClient.getInstance().getWeightLoadingCache();
+		Retrofit retrofit = (Retrofit) weightLoadingCache.get(baseUrl);
 		if (retrofit == null) {
 			retrofit = new Retrofit.Builder()
 					.baseUrl(baseUrl)
 					.addConverterFactory(GsonConverterFactory.create())
 					.build();
-			retrofitMap.put(baseUrl, retrofit);
+			weightLoadingCache.put(baseUrl, retrofit);
 		}
 		return retrofit;
 	}
