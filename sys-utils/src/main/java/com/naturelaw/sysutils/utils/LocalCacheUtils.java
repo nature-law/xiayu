@@ -1,9 +1,5 @@
 package com.naturelaw.sysutils.utils;
 
-import com.naturelaw.sysutils.cache.LocalCacheClient;
-
-import java.util.concurrent.TimeUnit;
-
 /**
  * description: 本地缓存
  *

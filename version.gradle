@@ -7,6 +7,6 @@ ext {
 			retrofit  : '2.9.0',
 			okhttp    : '3.14.9',
 			rxjava    : '2.2.21',
-			caffeine  : '3.0.3'
+			caffeine  : '2.9.2'
 	]
 }

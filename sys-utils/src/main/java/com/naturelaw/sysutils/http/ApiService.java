@@ -7,4 +7,5 @@ package com.naturelaw.sysutils.http;
  * @date 2021/7/9 14:13
  */
 public interface ApiService {
+
 }

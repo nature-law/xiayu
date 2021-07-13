@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 public class LocalCacheClient {
 	private static volatile LocalCacheClient client = null;
 
-	private static final int DEFAULT_INIT_SIZE = 100;
-	private static final int DEFAULT_MAX_SIZE = 200;
+	private static final int DEFAULT_INIT_SIZE = 200;
+	private static final int DEFAULT_MAX_SIZE = 1000;
 	private static final int DEFAULT_EXPIRE_TIME = 5 * 60;
 	private static final TimeUnit DEFAULT_TIMEUNIT = TimeUnit.SECONDS;
 
@@ -38,10 +38,10 @@ public class LocalCacheClient {
 	/**
 	 * 过期策略：根据缓存的权重来进行驱逐（权重只是用于确定缓存大小，不会用于决定该缓存是否被驱逐）
 	 */
-	private static final LoadingCache<String, Object> WEIGHT_CACHE = Caffeine.newBuilder()
+	private static final LoadingCache<String, String> WEIGHT_CACHE = Caffeine.newBuilder()
 			.maximumWeight(MAXIMUM_WEIGHT)
 			.expireAfterAccess(MAX_EXPIRE_TIME, TimeUnit.DAYS)
-			.weigher((String key, Object value) -> key.getBytes().length + value.getBytes().length)
+			.weigher((String key, String value) -> key.getBytes().length + value.getBytes().length)
 			.build(key -> key);
 
 	/**
