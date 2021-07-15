@@ -1,9 +1,9 @@
 dependencies {
 	implementation 'com.google.guava:guava'
-	implementation 'com.squareup.retrofit2:retrofit'
-	implementation 'com.squareup.retrofit2:converter-gson'
-	implementation group: 'com.squareup.retrofit2', name: 'adapter-rxjava2'
+	implementation group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider'
 	implementation group: 'com.squareup.okhttp3', name: 'okhttp'
+	implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor'
 	implementation group: 'io.reactivex.rxjava2', name: 'rxjava'
 	implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine'
+	testImplementation group: 'com.squareup.okhttp3', name: 'mockwebserver'
 }

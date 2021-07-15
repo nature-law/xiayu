@@ -40,19 +40,19 @@ subprojects {
 	dependencies {
 		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$rootProject.ext.version.springboot"
 		implementation "org.springframework.boot:spring-boot-starter-aop:$rootProject.ext.version.springboot"
-		testImplementation "org.springframework.boot:spring-boot-starter-test:$rootProject.ext.version.springboot"
 		implementation "org.springframework.boot:spring-boot-devtools:$rootProject.ext.version.springboot"
+		implementation group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: "$rootProject.ext.version.jackson_json"
 		implementation "com.google.guava:guava:$rootProject.ext.version.guava"
 		implementation "org.apache.curator:curator-recipes:$rootProject.ext.version.curator"
 		implementation "org.apache.curator:curator-framework:$rootProject.ext.version.curator"
 		implementation "org.apache.curator:curator-client:$rootProject.ext.version.curator"
 		implementation "mysql:mysql-connector-java:$rootProject.ext.version.mysql"
-		implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.version.retrofit"
-		implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.version.retrofit"
-		implementation group: 'com.squareup.retrofit2', name: 'adapter-rxjava2', version:"$rootProject.ext.version.retrofit"
 		implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: "$rootProject.ext.version.okhttp"
+		implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: "$rootProject.ext.version.okhttp"
 		implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: "$rootProject.ext.version.rxjava"
 		implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: "$rootProject.ext.version.caffeine"
+		testImplementation "org.springframework.boot:spring-boot-starter-test:$rootProject.ext.version.springboot"
+		testImplementation group: 'com.squareup.okhttp3', name: 'mockwebserver', version: "$rootProject.ext.version.okhttp"
 
 
 	}
