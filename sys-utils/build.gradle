@@ -5,5 +5,6 @@ dependencies {
 	implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor'
 	implementation group: 'io.reactivex.rxjava2', name: 'rxjava'
 	implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine'
+	implementation group: 'com.auth0', name: 'auth0'
 	testImplementation group: 'com.squareup.okhttp3', name: 'mockwebserver'
 }

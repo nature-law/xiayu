@@ -7,6 +7,9 @@ ext {
 			okhttp      : '4.9.0',
 			rxjava      : '2.2.21',
 			caffeine    : '2.9.2',
-			jackson_json: '2.12.4'
+			jackson_json: '2.12.4',
+			shiro       : '1.7.1',
+			auth0       : '1.32.0',
+			postgresql  : '42.2.20'
 	]
 }
