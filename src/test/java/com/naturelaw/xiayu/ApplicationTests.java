@@ -1,10 +1,10 @@
-package com.naturelaw.core;
+package com.naturelaw.xiayu;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CoreApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -29,14 +29,6 @@ allprojects {
 		gradlePluginPortal()
 	}
 
-	tasks.withType(JavaCompile) {
-		//enable compilation in a separate daemon process
-		options.fork = true
-		options.encoding = 'UTF-8'
-	}
-}
-
-subprojects {
 	dependencies {
 		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$rootProject.ext.version.springboot"
 		implementation "org.springframework.boot:spring-boot-starter-aop:$rootProject.ext.version.springboot"
@@ -57,9 +49,17 @@ subprojects {
 		implementation group: 'org.postgresql', name: 'postgresql', version: "$rootProject.ext.version.postgresql"
 		testImplementation "org.springframework.boot:spring-boot-starter-test:$rootProject.ext.version.springboot"
 		testImplementation group: 'com.squareup.okhttp3', name: 'mockwebserver', version: "$rootProject.ext.version.okhttp"
-
-
 	}
+
+
+	tasks.withType(JavaCompile) {
+		//enable compilation in a separate daemon process
+		options.fork = true
+		options.encoding = 'UTF-8'
+	}
+}
+
+subprojects {
 
 	test {
 		useJUnitPlatform()
