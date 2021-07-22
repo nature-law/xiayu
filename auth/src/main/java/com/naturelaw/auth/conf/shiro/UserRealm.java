@@ -20,6 +20,7 @@ public class UserRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+		token.getCredentials();
 		String username = (String) token.getPrincipal();
 		if (!"andy".equals(username)) {
 			throw new UnknownAccountException("账户不存在!");
