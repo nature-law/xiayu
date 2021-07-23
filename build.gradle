@@ -24,11 +24,26 @@ allprojects {
 
 	repositories {
 		mavenLocal()
+		maven { url 'http://8.142.78.63:8081/repository/maven-central/'}
 		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
 		mavenCentral()
 		gradlePluginPortal()
 	}
 
+	dependencies {
+		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$rootProject.ext.version.springboot"
+		testImplementation "org.springframework.boot:spring-boot-starter-test:$rootProject.ext.version.springboot"
+	}
+
+
+	tasks.withType(JavaCompile) {
+		//enable compilation in a separate daemon process
+		options.fork = true
+		options.encoding = 'UTF-8'
+	}
+}
+
+subprojects {
 	dependencies {
 		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$rootProject.ext.version.springboot"
 		implementation "org.springframework.boot:spring-boot-starter-aop:$rootProject.ext.version.springboot"
@@ -50,17 +65,6 @@ allprojects {
 		testImplementation "org.springframework.boot:spring-boot-starter-test:$rootProject.ext.version.springboot"
 		testImplementation group: 'com.squareup.okhttp3', name: 'mockwebserver', version: "$rootProject.ext.version.okhttp"
 	}
-
-
-	tasks.withType(JavaCompile) {
-		//enable compilation in a separate daemon process
-		options.fork = true
-		options.encoding = 'UTF-8'
-	}
-}
-
-subprojects {
-
 	test {
 		useJUnitPlatform()
 	}
