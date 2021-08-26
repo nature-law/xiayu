@@ -1,3 +1,4 @@
 rootProject.name = 'xiayu'
 
-include 'design-pattern','sys-utils','api','core','auth'
+include 'design-pattern','sys-utils','api','system'
+

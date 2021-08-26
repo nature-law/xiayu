@@ -16,6 +16,7 @@ buildscript {
 allprojects {
 	apply plugin: 'java'
 	apply plugin: 'idea'
+	apply plugin: 'maven-publish'
 	apply plugin: "org.springframework.boot"
 	group = "$projectGroup"
 	version = "$projectVersion"
@@ -26,24 +27,61 @@ allprojects {
 		mavenLocal()
 		maven {
 			allowInsecureProtocol = true
-			url 'http://8.142.78.63:8081/repository/maven-central/'}
+			url 'http://8.142.78.63:8081/repository/maven-snapshots/'
+		}
 		maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
 		mavenCentral()
 		gradlePluginPortal()
 	}
 
 	dependencies {
-		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$rootProject.ext.version.springboot"
 		testImplementation "org.springframework.boot:spring-boot-starter-test:$rootProject.ext.version.springboot"
 	}
-
 
 	tasks.withType(JavaCompile) {
 		//enable compilation in a separate daemon process
 		options.fork = true
 		options.encoding = 'UTF-8'
 	}
+
+	apply plugin: 'maven-publish'
+
+	publishing {
+		publications {
+			// 推送
+			publishMyProjectMiniexcel(MavenPublication) {
+				// 编译jar包
+				from components.java
+				artifact bootJar
+			}
+		}
+		// 到 https://oss.sonatype.org/#nexus-search; 搜索是否上传成功
+		repositories {
+			// 发布Release版本可在版本号后面带上'-RELEASE'，也可不带
+			maven {
+				name 'Release'
+				allowInsecureProtocol true
+				url 'http://8.142.78.63:8081/repository/maven-releases/'
+				credentials {
+					username = "${nexus_username}"
+					password = "${nexus_password}"
+				}
+			}
+			// 发布Snapshot快照版本必须在版本号后面加上'-SNAPSHOT'
+			maven {
+				name = 'Snapshot'
+				allowInsecureProtocol true
+				url = 'http://8.142.78.63:8081/repository/maven-snapshots/'
+				credentials {
+					username = "${nexus_username}"
+					password = "${nexus_password}"
+				}
+			}
+		}
+	}
+
 }
+
 
 subprojects {
 	dependencies {
