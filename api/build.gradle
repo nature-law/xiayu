@@ -1,5 +1,7 @@
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation group: 'org.apache.dubbo', name: 'dubbo-spring-boot-starter', version: "$rootProject.ext.version.dubbo"
+	implementation group: 'org.apache.dubbo', name: 'dubbo-dependencies-zookeeper', version: "$rootProject.ext.version.dubbo", ext: 'pom'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
