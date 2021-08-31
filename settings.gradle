@@ -1,4 +1,10 @@
 rootProject.name = 'xiayu'
 
-include 'design-pattern','sys-utils','api','system','dubbo-provider','dubbo-consumer','framework'
+include ':system'
+include ':design-pattern'
+include ':sys-utils'
+include 'api'
+include 'dubbo-provider'
+include 'dubbo-consumer'
+include 'framework'
 

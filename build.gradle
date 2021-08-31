@@ -1,6 +1,19 @@
-apply from: './version.gradle'
-
 buildscript {
+	ext {
+		springboot = '2.4.5'
+		guava = '30.1.1-jre'
+		curator = '5.1.0'
+		mysql = '8.0.25'
+		okhttp = '4.9.0'
+		rxjava = '2.2.21'
+		caffeine = '2.9.2'
+		jackson_json = '2.12.4'
+		shiro = '1.7.1'
+		auth0 = '1.32.0'
+		postgresql = '42.2.20'
+		dubbo = '3.0.1'
+	}
+
 	repositories {
 		mavenLocal()
 		maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
@@ -8,18 +21,27 @@ buildscript {
 		gradlePluginPortal()
 	}
 	dependencies {
-		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springboot}"
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:$springboot"
 	}
 }
 
+plugins {
+	id 'idea'
+	id 'java-platform'
+	id 'org.springframework.boot' version "${springboot}"
+}
 
 allprojects {
-	apply plugin: 'java'
-	apply plugin: 'idea'
-	apply plugin: 'maven-publish'
-	apply plugin: "org.springframework.boot"
 	group = "$projectGroup"
 	version = "$projectVersion"
+}
+
+subprojects {
+	// 目前Gradle版本不支持在allprojects下声明plugins，使用的是旧的写法
+	apply plugin: 'java'
+	apply plugin: 'maven-publish'
+	apply plugin: "org.springframework.boot"
+
 	sourceCompatibility = '1.8'
 	targetCompatibility = '1.8'
 
@@ -34,17 +56,11 @@ allprojects {
 		gradlePluginPortal()
 	}
 
-	dependencies {
-		testImplementation "org.springframework.boot:spring-boot-starter-test:$rootProject.ext.version.springboot"
-	}
-
 	tasks.withType(JavaCompile) {
 		//enable compilation in a separate daemon process
 		options.fork = true
 		options.encoding = 'UTF-8'
 	}
-
-	apply plugin: 'maven-publish'
 
 	publishing {
 		publications {
@@ -80,32 +96,37 @@ allprojects {
 		}
 	}
 
-}
 
-
-subprojects {
-	dependencies {
-		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$rootProject.ext.version.springboot"
-		implementation "org.springframework.boot:spring-boot-starter-aop:$rootProject.ext.version.springboot"
-		implementation "org.springframework.boot:spring-boot-starter-data-jpa:$rootProject.ext.version.springboot"
-		implementation "org.springframework.boot:spring-boot-devtools:$rootProject.ext.version.springboot"
-		implementation group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: "$rootProject.ext.version.jackson_json"
-		implementation "com.google.guava:guava:$rootProject.ext.version.guava"
-		implementation "org.apache.curator:curator-recipes:$rootProject.ext.version.curator"
-		implementation "org.apache.curator:curator-framework:$rootProject.ext.version.curator"
-		implementation "org.apache.curator:curator-client:$rootProject.ext.version.curator"
-		implementation "mysql:mysql-connector-java:$rootProject.ext.version.mysql"
-		implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: "$rootProject.ext.version.okhttp"
-		implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: "$rootProject.ext.version.okhttp"
-		implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: "$rootProject.ext.version.rxjava"
-		implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: "$rootProject.ext.version.caffeine"
-		implementation group: 'org.apache.shiro', name: 'shiro-spring-boot-web-starter', version: "$rootProject.ext.version.shiro"
-		implementation group: 'com.auth0', name: 'auth0', version: "$rootProject.ext.version.auth0"
-		implementation group: 'org.postgresql', name: 'postgresql', version: "$rootProject.ext.version.postgresql"
-		testImplementation "org.springframework.boot:spring-boot-starter-test:$rootProject.ext.version.springboot"
-		testImplementation group: 'com.squareup.okhttp3', name: 'mockwebserver', version: "$rootProject.ext.version.okhttp"
-	}
 	test {
 		useJUnitPlatform()
 	}
+
+	dependencies {
+		implementation group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: "$jackson_json"
+		implementation "com.google.guava:guava:$guava"
+		implementation "org.apache.curator:curator-recipes:$curator"
+		implementation "org.apache.curator:curator-framework:$curator"
+		implementation "org.apache.curator:curator-client:$curator"
+		implementation "mysql:mysql-connector-java:$mysql"
+		implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: "$okhttp"
+		implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: "$okhttp"
+		implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: "$rxjava"
+		implementation group: 'com.github.ben-manes.caffeine', name: 'caffeine', version: "$caffeine"
+		implementation group: 'org.apache.shiro', name: 'shiro-spring-boot-web-starter', version: "$shiro"
+		implementation group: 'com.auth0', name: 'auth0', version: "$auth0"
+		implementation group: 'org.postgresql', name: 'postgresql', version: "$postgresql"
+		implementation "org.springframework.boot:spring-boot-starter-test:$springboot"
+		implementation group: 'com.squareup.okhttp3', name: 'mockwebserver', version: "$okhttp"
+		implementation group: 'org.apache.dubbo', name: 'dubbo-spring-boot-starter', version: "$dubbo"
+		implementation group: 'org.apache.dubbo', name: 'dubbo-dependencies-zookeeper', version: "$dubbo"
+	}
 }
+javaPlatform {
+	allowDependencies()
+}
+
+dependencies {
+	api platform("org.springframework.boot:spring-boot-dependencies:${springboot}")
+}
+
+
