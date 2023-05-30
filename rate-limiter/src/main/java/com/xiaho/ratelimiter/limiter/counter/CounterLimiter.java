@@ -1,4 +1,4 @@
-package com.xiaho.ratelimiter.counter;
+package com.xiaho.ratelimiter.limiter.counter;
 
 import com.xiaho.ratelimiter.limiter.RateLimiter;
 

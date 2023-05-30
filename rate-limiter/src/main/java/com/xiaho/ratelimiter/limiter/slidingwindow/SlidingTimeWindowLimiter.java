@@ -1,10 +1,11 @@
-package com.xiaho.ratelimiter.slidingwindow;
+package com.xiaho.ratelimiter.limiter.slidingwindow;
 
 import com.xiaho.ratelimiter.limiter.RateLimiter;
 import lombok.Data;
 
 import java.time.Instant;
 import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -50,29 +51,41 @@ public class SlidingTimeWindowLimiter implements RateLimiter {
             if (timeGrids.size() > NUM_ELEMENTS) {
                 TimeGridInfo timeGridInfo = timeGrids.poll();
                 if (timeGridInfo != null) {
-                    final int timeCount = timeGridInfo.getTimeCount();
-                    System.out.println(timeCount);
                     count -= timeGridInfo.getTimeCount();
+                    if (count < 0) {
+                        count = 0;
+                    }
+
                 }
             }
+            displayQueue(timeGrids);
         }, 0, TIME_WINDOW_SIZE, TimeUnit.MILLISECONDS);
+    }
+
+    private void displayQueue(Queue<TimeGridInfo> queue) {
+        queue.forEach(item -> {
+            System.out.printf(item.getTimeCount() + ", ");
+        });
+        System.out.println();
     }
 
     @Override
     public synchronized boolean acquire() {
-        TimeGridInfo rightGrid = timeGrids.peek();
-        if (rightGrid != null) {
+        if (this.count <= qp10s) {
+            this.count++;
+        }
+        boolean isAcquire = count <= qp10s;
+        if (!isAcquire) {
+            this.count--;
+        } else {
+            TimeGridInfo rightGrid = timeGrids.getLast();
             final long now = Instant.now().toEpochMilli();
             if ((now - rightGrid.lastTime) < TIME_WINDOW_SIZE) {
                 rightGrid.setTimeCount(rightGrid.getTimeCount() + 1);
                 rightGrid.setLastTime(now);
             }
         }
-
-        this.count++;
-        System.out.println(count);
-        boolean isAcquire = count <= qp10s;
-        System.out.println(isAcquire);
+        displayQueue(timeGrids);
         return isAcquire;
     }
 

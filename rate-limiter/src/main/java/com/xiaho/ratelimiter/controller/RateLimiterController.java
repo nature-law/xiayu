@@ -1,8 +1,9 @@
 package com.xiaho.ratelimiter.controller;
 
-import com.xiaho.ratelimiter.counter.CounterLimiter;
+import com.xiaho.ratelimiter.limiter.counter.CounterLimiter;
 import com.xiaho.ratelimiter.exception.RateLimiterException;
-import com.xiaho.ratelimiter.slidingwindow.SlidingTimeWindowLimiter;
+import com.xiaho.ratelimiter.limiter.slidinglog.SlidingLogLimiter;
+import com.xiaho.ratelimiter.limiter.slidingwindow.SlidingTimeWindowLimiter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,8 @@ public class RateLimiterController {
 
     private SlidingTimeWindowLimiter slidingTimeWindowLimiter = new SlidingTimeWindowLimiter(10);
 
+    private SlidingLogLimiter slidingLogLimiter = new SlidingLogLimiter();
+
     @GetMapping(value = "/counter")
     public String counter() {
         if (counterLimiter.acquire()) {
@@ -35,6 +38,15 @@ public class RateLimiterController {
     public String slidingTimeWindow() {
         if (slidingTimeWindowLimiter.acquire()) {
             return "slidingTimeWindow";
+        } else {
+            throw new RateLimiterException("limiter");
+        }
+    }
+
+    @GetMapping(value = "/slidingLogLimiter")
+    public String slidingLogLimiter() {
+        if (slidingLogLimiter.acquire()) {
+            return "slidingLogLimiter";
         } else {
             throw new RateLimiterException("limiter");
         }
