@@ -58,7 +58,7 @@ public class SlidingTimeWindowLimiter implements RateLimiter {
 
                 }
             }
-            displayQueue(timeGrids);
+//            displayQueue(timeGrids);
         }, 0, TIME_WINDOW_SIZE, TimeUnit.MILLISECONDS);
     }
 

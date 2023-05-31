@@ -1,9 +1,10 @@
 package com.xiaho.ratelimiter.controller;
 
-import com.xiaho.ratelimiter.limiter.counter.CounterLimiter;
 import com.xiaho.ratelimiter.exception.RateLimiterException;
+import com.xiaho.ratelimiter.limiter.counter.CounterLimiter;
 import com.xiaho.ratelimiter.limiter.slidinglog.SlidingLogLimiter;
 import com.xiaho.ratelimiter.limiter.slidingwindow.SlidingTimeWindowLimiter;
+import com.xiaho.ratelimiter.limiter.tokenbucket.TokenBucketLimiter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,8 @@ public class RateLimiterController {
     private SlidingTimeWindowLimiter slidingTimeWindowLimiter = new SlidingTimeWindowLimiter(10);
 
     private SlidingLogLimiter slidingLogLimiter = new SlidingLogLimiter();
+
+    private TokenBucketLimiter tokenBucketLimiter = new TokenBucketLimiter(1, 10);
 
     @GetMapping(value = "/counter")
     public String counter() {
@@ -47,6 +50,15 @@ public class RateLimiterController {
     public String slidingLogLimiter() {
         if (slidingLogLimiter.acquire()) {
             return "slidingLogLimiter";
+        } else {
+            throw new RateLimiterException("limiter");
+        }
+    }
+
+    @GetMapping(value = "/tokenBucketLimiter")
+    public String tokenBucketLimiter() {
+        if (tokenBucketLimiter.acquire(1)) {
+            return "tokenBucketLimiter";
         } else {
             throw new RateLimiterException("limiter");
         }
