@@ -2,6 +2,7 @@ package com.xiaho.ratelimiter.controller;
 
 import com.xiaho.ratelimiter.exception.RateLimiterException;
 import com.xiaho.ratelimiter.limiter.counter.CounterLimiter;
+import com.xiaho.ratelimiter.limiter.leakybucket.LeakyBucketLimiter;
 import com.xiaho.ratelimiter.limiter.slidinglog.SlidingLogLimiter;
 import com.xiaho.ratelimiter.limiter.slidingwindow.SlidingTimeWindowLimiter;
 import com.xiaho.ratelimiter.limiter.tokenbucket.TokenBucketLimiter;
@@ -27,6 +28,8 @@ public class RateLimiterController {
     private SlidingLogLimiter slidingLogLimiter = new SlidingLogLimiter();
 
     private TokenBucketLimiter tokenBucketLimiter = new TokenBucketLimiter(1, 10);
+
+    private LeakyBucketLimiter leakyBucketLimiter = new LeakyBucketLimiter(20, 5);
 
     @GetMapping(value = "/counter")
     public String counter() {
@@ -59,6 +62,15 @@ public class RateLimiterController {
     public String tokenBucketLimiter() {
         if (tokenBucketLimiter.acquire(1)) {
             return "tokenBucketLimiter";
+        } else {
+            throw new RateLimiterException("limiter");
+        }
+    }
+
+    @GetMapping(value = "/leakyBucketLimiter")
+    public String leakyBucketLimiter() {
+        if (leakyBucketLimiter.acquire()) {
+            return "leakyBucketLimiter";
         } else {
             throw new RateLimiterException("limiter");
         }
